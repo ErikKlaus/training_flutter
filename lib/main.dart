@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:training_flutter/day_5/scaffold.dart';
+import 'package:training_flutter/tugas_1/tugas1.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,9 +30,11 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: .fromSeed(
+          seedColor: const Color.fromARGB(255, 179, 16, 16),
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const tugas1(),
     );
   }
 }

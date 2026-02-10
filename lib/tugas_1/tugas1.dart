@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class tugas1 extends StatelessWidget {
-  const tugas1({super.key});
+class Tugas1 extends StatelessWidget {
+  const Tugas1({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,6 @@ class tugas1 extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
         centerTitle: true,
-        // actions: [Text('PPKD Batch 5')],
       ),
       body: Column(
         children: [

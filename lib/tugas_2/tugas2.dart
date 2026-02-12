@@ -235,7 +235,7 @@ class Tugas2 extends StatelessWidget {
                 width: double.infinity,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: Colors.red.shade50,
+                  color: const Color(0xffd61000),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(

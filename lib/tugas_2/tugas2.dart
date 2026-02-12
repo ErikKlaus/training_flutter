@@ -192,7 +192,7 @@ class Tugas2 extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
-            //6 deskripsi naratif (baris 6)
+            //6 deskripsi naratif (baris 5)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Text(
@@ -226,28 +226,32 @@ class Tugas2 extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 85),
 
             //7. visual branding (baris 6)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Container(
                 width: double.infinity,
-                height: 50,
+                height: 40,
                 decoration: BoxDecoration(
-                  color: const Color(0xffd61000),
-                  borderRadius: BorderRadius.circular(14),
+                  color: Colors.red.shade50,
+                  borderRadius: BorderRadius.circular(16),
                 ),
-
-                child: const Center(
-                  child: Text(
-                    "Riwayat Donor Darah",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 16,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.bloodtype, color: Color(0xffd61000)),
+                    SizedBox(width: 10),
+                    Text(
+                      "Setetes",
+                      style: TextStyle(
+                        color: Color(0xffd61000),
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18,
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),

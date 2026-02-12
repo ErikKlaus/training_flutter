@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:training_flutter/day_5/scaffold.dart';
 import 'package:training_flutter/tugas_1/tugas1.dart';
+import 'package:training_flutter/tugas_2/tugas2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           seedColor: const Color.fromARGB(255, 179, 16, 16),
         ),
       ),
-      home: const Tugas1(),
+      home: const Tugas2(),
     );
   }
 }

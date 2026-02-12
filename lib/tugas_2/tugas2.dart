@@ -226,7 +226,7 @@ class Tugas2 extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 5),
+            const SizedBox(height: 85),
 
             //7. visual branding (baris 6)
             Padding(

@@ -6,6 +6,7 @@ class Tugas2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //1. header halaman (app bar)
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -37,6 +38,7 @@ class Tugas2 extends StatelessWidget {
           children: [
             const SizedBox(height: 18),
 
+            //bagian foto profil (visual branding)
             Center(
               child: Container(
                 width: 105,
@@ -53,6 +55,7 @@ class Tugas2 extends StatelessWidget {
 
             const SizedBox(height: 18),
 
+            //2. identitas utama (baris 1)
             const Center(
               child: Text(
                 "Mulyono | @mulyono22",
@@ -62,6 +65,7 @@ class Tugas2 extends StatelessWidget {
 
             const SizedBox(height: 10),
 
+            //3. detail kontak/informasi (baris 2)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Container(
@@ -96,6 +100,7 @@ class Tugas2 extends StatelessWidget {
 
             const SizedBox(height: 8),
 
+            // 4. aksi/informasi pendukung (baris 3)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Row(
@@ -117,10 +122,12 @@ class Tugas2 extends StatelessWidget {
 
             const SizedBox(height: 16),
 
+            //5. Area statistik horizontal (baris 4)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Row(
                 children: [
+                  //kotak statistik 1
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 14),
@@ -151,6 +158,7 @@ class Tugas2 extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
 
+                  //kotak statistik 2
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 14),
@@ -184,6 +192,7 @@ class Tugas2 extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
+            //6 deskripsi naratif (baris 6)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Text(
@@ -199,6 +208,7 @@ class Tugas2 extends StatelessWidget {
 
             const SizedBox(height: 10),
 
+            //tambahan list hewan peliharaan
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Row(
@@ -217,6 +227,8 @@ class Tugas2 extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 15),
+
+            //7. visual branding (baris 6)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Container(

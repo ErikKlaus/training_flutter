@@ -55,7 +55,7 @@ class Tugas2 extends StatelessWidget {
 
             const Center(
               child: Text(
-                "Erik Klaus | @rikklaus",
+                "Mulyono | @mulyono22",
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
               ),
             ),
@@ -187,7 +187,7 @@ class Tugas2 extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Text(
-                "Pedonor Aktif Setetes Sejak Januari 2026",
+                "Pendonor Aktif Setetes Sejak Januari 2026",
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Colors.grey,

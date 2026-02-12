@@ -186,6 +186,21 @@ class Tugas2 extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Text(
+                "Pedonor Aktif Setetes Sejak Januari 2026",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
               child: Row(
                 children: [
                   const Text(
@@ -199,6 +214,29 @@ class Tugas2 extends StatelessWidget {
                     ],
                   ),
                 ],
+              ),
+            ),
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18),
+              child: Container(
+                width: double.infinity,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: const Color(0xffd61000),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+
+                child: const Center(
+                  child: Text(
+                    "Riwayat Donor Darah",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],

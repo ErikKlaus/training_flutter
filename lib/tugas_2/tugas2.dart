@@ -8,17 +8,18 @@ class Tugas2 extends StatelessWidget {
     return Scaffold(
       //1. header halaman (app bar)
       appBar: AppBar(
-        elevation: 0,
         backgroundColor: Colors.white,
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {},
         ),
+
         title: const Text(
           "Profil Saya",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
         ),
+
         actions: [
           TextButton(
             onPressed: () {},

@@ -50,6 +50,7 @@ class Tugas4 extends StatelessWidget {
               labelText: "Deskripsi",
               border: OutlineInputBorder(),
             ),
+            maxLines: 3,
           ),
           const SizedBox(height: 15),
           ListTile(

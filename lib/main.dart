@@ -5,6 +5,7 @@ import 'package:training_flutter/tugas_1/tugas1.dart';
 import 'package:training_flutter/tugas_2/tugas2.dart';
 import 'package:training_flutter/tugas_3/tugas3.dart';
 import 'package:training_flutter/tugas_4/tugas4.dart';
+import 'package:training_flutter/tugas_5/tugas5.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
           seedColor: const Color.fromARGB(255, 179, 16, 16),
         ),
       ),
-      home: const Tugas3(),
+      home: const Tugas5(),
     );
   }
 }

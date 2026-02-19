@@ -183,7 +183,7 @@ class _Tugas5State extends State<Tugas5> {
               ),
             const SizedBox(height: 25),
             const Text(
-              "5. GestureDetector (Counter)",
+              "5. GestureDetector",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
@@ -198,7 +198,6 @@ class _Tugas5State extends State<Tugas5> {
             ),
             const SizedBox(height: 10),
             GestureDetector(
-              behavior: HitTestBehavior.opaque,
               onTap: () {
                 print("Ditekan sekali");
                 setState(() {

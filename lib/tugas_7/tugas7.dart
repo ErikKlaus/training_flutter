@@ -10,7 +10,7 @@ class tugas7 extends StatefulWidget {
 }
 
 class _tugas7State extends State<tugas7> {
-  String menu = "Syarat & Ketentuan";
+  String menu = "Checkbox";
   bool isChecked = false;
   bool isDark = false;
   String kategori = "Elektronik";
@@ -18,7 +18,6 @@ class _tugas7State extends State<tugas7> {
   TimeOfDay? jam;
 
   final Color primary = const Color(0xFFD61000);
-  final Color accent = const Color.fromARGB(255, 0, 0, 0);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class _tugas7State extends State<tugas7> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(color: accent),
+        iconTheme: IconThemeData(color: primary),
         title: Text(
           menu,
           style: TextStyle(color: primary, fontWeight: FontWeight.bold),
@@ -40,7 +39,7 @@ class _tugas7State extends State<tugas7> {
             DrawerHeader(
               child: Center(
                 child: Text(
-                  "Tugas 7 Flutter",
+                  "Form Input",
                   style: TextStyle(
                     color: primary,
                     fontSize: 20,
@@ -49,11 +48,11 @@ class _tugas7State extends State<tugas7> {
                 ),
               ),
             ),
-            item(Icons.check_box, "Syarat & Ketentuan"),
-            item(Icons.toggle_on, "Mode Gelap"),
-            item(Icons.list, "Pilih Kategori Produk"),
-            item(Icons.date_range, "Pilih Tanggal Lahir"),
-            item(Icons.access_time, "Atur Pengingat"),
+            item(Icons.check_box, "Checkbox"),
+            item(Icons.toggle_on, "Switch"),
+            item(Icons.list, "Dropdown"),
+            item(Icons.date_range, "Tanggal"),
+            item(Icons.access_time, "Jam"),
           ],
         ),
       ),
@@ -63,13 +62,13 @@ class _tugas7State extends State<tugas7> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             content(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             Text(
               hasil(),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: isDark ? Colors.white : accent,
+                color: isDark ? Colors.white : primary,
               ),
             ),
           ],
@@ -81,7 +80,7 @@ class _tugas7State extends State<tugas7> {
   Widget item(IconData icon, String title) {
     return ListTile(
       leading: Icon(icon, color: primary),
-      title: Text(title, style: TextStyle(color: accent)),
+      title: Text(title, style: TextStyle(color: primary)),
       onTap: () {
         setState(() => menu = title);
         Navigator.pop(context);
@@ -90,40 +89,38 @@ class _tugas7State extends State<tugas7> {
   }
 
   Widget content() {
-    if (menu == "Syarat & Ketentuan") {
+    if (menu == "Checkbox") {
       return CheckboxListTile(
         activeColor: primary,
         title: Text(
           "Saya menyetujui semua persyaratan yang berlaku",
-          style: TextStyle(color: isDark ? Colors.white : accent),
+          style: TextStyle(color: isDark ? Colors.white : primary),
         ),
         value: isChecked,
         onChanged: (v) => setState(() => isChecked = v!),
       );
     }
 
-    if (menu == "Mode Gelap") {
+    if (menu == "Switch") {
       return SwitchListTile(
         activeColor: primary,
         title: Text(
           "Aktifkan Mode Gelap",
-          style: TextStyle(color: isDark ? Colors.white : accent),
+          style: TextStyle(color: isDark ? Colors.white : primary),
         ),
         value: isDark,
         onChanged: (v) => setState(() => isDark = v),
       );
     }
 
-    if (menu == "Pilih Kategori Produk") {
+    if (menu == "Dropdown") {
       return DropdownButtonFormField<String>(
         value: kategori,
         decoration: InputDecoration(
-          labelText: "Pilih Kategori Produk",
+          labelText: "Pilih Kategori",
+          labelStyle: TextStyle(color: primary),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: accent),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: primary, width: 2),
+            borderSide: BorderSide(color: primary),
           ),
         ),
         items: [
@@ -136,14 +133,14 @@ class _tugas7State extends State<tugas7> {
       );
     }
 
-    if (menu == "Pilih Tanggal Lahir") {
+    if (menu == "Tanggal") {
       return OutlinedButton.icon(
         style: OutlinedButton.styleFrom(
-          side: BorderSide(color: accent),
-          foregroundColor: accent,
+          side: BorderSide(color: primary),
+          foregroundColor: primary,
         ),
         icon: Icon(Icons.calendar_today),
-        label: Text("Pilih Tanggal Lahir"),
+        label: Text("Pilih Tanggal"),
         onPressed: () async {
           final p = await showDatePicker(
             context: context,
@@ -156,14 +153,14 @@ class _tugas7State extends State<tugas7> {
       );
     }
 
-    if (menu == "Atur Pengingat") {
+    if (menu == "Jam") {
       return OutlinedButton.icon(
         style: OutlinedButton.styleFrom(
-          side: BorderSide(color: accent),
-          foregroundColor: accent,
+          side: BorderSide(color: primary),
+          foregroundColor: primary,
         ),
         icon: Icon(Icons.access_time),
-        label: Text("Pilih Waktu Pengingat"),
+        label: Text("Pilih Waktu"),
         onPressed: () async {
           final p = await showTimePicker(
             context: context,
@@ -178,50 +175,31 @@ class _tugas7State extends State<tugas7> {
   }
 
   String hasil() {
-    if (menu == "Syarat & Ketentuan") {
+    if (menu == "Checkbox") {
       return isChecked
-          ? "Lanjutkan pendaftaran diperbolehkan"
-          : "Anda belum bisa melanjutkan";
+          ? "Lanjutkan pendaftaran diperbolehkan hehe"
+          : "Woi belum bisa lanjut!";
     }
 
-    if (menu == "Mode Gelap") {
-      return isDark ? "Mode Gelap Aktif" : "Mode Terang Aktif";
+    if (menu == "Switch") {
+      return isDark ? "Mode Gelap Aktif" : "Mode Terang Mati";
     }
 
-    if (menu == "Pilih Kategori Produk") {
+    if (menu == "Dropdown") {
       return "Anda memilih kategori: $kategori";
     }
 
-    if (menu == "Pilih Tanggal Lahir" && tanggal != null) {
-      return "Tanggal Lahir: ${tanggal!.day} ${namaBulan(tanggal!.month)} ${tanggal!.year}";
+    if (menu == "Tanggal" && tanggal != null) {
+      return "Tanggal Lahir: ${tanggal!.day}-${tanggal!.month}-${tanggal!.year}";
     }
 
-    if (menu == "Atur Pengingat" && jam != null) {
+    if (menu == "Jam" && jam != null) {
       final h = jam!.hourOfPeriod == 0 ? 12 : jam!.hourOfPeriod;
       final m = jam!.minute.toString().padLeft(2, '0');
       final p = jam!.period == DayPeriod.am ? "AM" : "PM";
-      return "Pengingat diatur pukul: $h:$m $p";
+      return "Jam: $h:$m $p";
     }
 
     return "";
-  }
-
-  String namaBulan(int bulan) {
-    const list = [
-      "",
-      "Januari",
-      "Februari",
-      "Maret",
-      "April",
-      "Mei",
-      "Juni",
-      "Juli",
-      "Agustus",
-      "September",
-      "Oktober",
-      "November",
-      "Desember",
-    ];
-    return list[bulan];
   }
 }

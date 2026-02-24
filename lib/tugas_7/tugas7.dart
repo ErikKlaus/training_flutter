@@ -10,7 +10,7 @@ class tugas7 extends StatefulWidget {
 }
 
 class _tugas7State extends State<tugas7> {
-  String menu = "Checkbox";
+  String menu = "Syarat & Ketentuan";
   bool isChecked = false;
   bool isDark = false;
   String kategori = "Elektronik";

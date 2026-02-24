@@ -18,6 +18,7 @@ class _tugas7State extends State<tugas7> {
   TimeOfDay? jam;
 
   final Color primary = const Color(0xFFD61000);
+  final Color dark = const Color(0xFF000000);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class _tugas7State extends State<tugas7> {
             DrawerHeader(
               child: Center(
                 child: Text(
-                  "Form Input",
+                  "Tugas 7 Flutter",
                   style: TextStyle(
                     color: primary,
                     fontSize: 20,
@@ -48,11 +49,11 @@ class _tugas7State extends State<tugas7> {
                 ),
               ),
             ),
-            item(Icons.check_box, "Checkbox"),
-            item(Icons.toggle_on, "Switch"),
-            item(Icons.list, "Dropdown"),
-            item(Icons.date_range, "Tanggal"),
-            item(Icons.access_time, "Jam"),
+            item(Icons.check_box, "Syarat & Ketentuan"),
+            item(Icons.toggle_on, "Mode Gelap"),
+            item(Icons.list, "Pilih Kategori Produk"),
+            item(Icons.date_range, "Pilih Tanggal Lahir"),
+            item(Icons.access_time, "Atur Pengingat"),
           ],
         ),
       ),
@@ -80,7 +81,7 @@ class _tugas7State extends State<tugas7> {
   Widget item(IconData icon, String title) {
     return ListTile(
       leading: Icon(icon, color: primary),
-      title: Text(title, style: TextStyle(color: primary)),
+      title: Text(title, style: TextStyle(color: dark)),
       onTap: () {
         setState(() => menu = title);
         Navigator.pop(context);
@@ -89,36 +90,36 @@ class _tugas7State extends State<tugas7> {
   }
 
   Widget content() {
-    if (menu == "Checkbox") {
+    if (menu == "Syarat & Ketentuan") {
       return CheckboxListTile(
         activeColor: primary,
         title: Text(
           "Saya menyetujui semua persyaratan yang berlaku",
-          style: TextStyle(color: isDark ? Colors.white : primary),
+          style: TextStyle(color: isDark ? Colors.white : dark),
         ),
         value: isChecked,
         onChanged: (v) => setState(() => isChecked = v!),
       );
     }
 
-    if (menu == "Switch") {
+    if (menu == "Mode Gelap") {
       return SwitchListTile(
-        activeColor: primary,
+        activeThumbColor: primary,
         title: Text(
           "Aktifkan Mode Gelap",
-          style: TextStyle(color: isDark ? Colors.white : primary),
+          style: TextStyle(color: isDark ? Colors.white : dark),
         ),
         value: isDark,
         onChanged: (v) => setState(() => isDark = v),
       );
     }
 
-    if (menu == "Dropdown") {
+    if (menu == "Pilih Kategori Produk") {
       return DropdownButtonFormField<String>(
-        value: kategori,
+        initialValue: kategori,
         decoration: InputDecoration(
           labelText: "Pilih Kategori",
-          labelStyle: TextStyle(color: primary),
+          labelStyle: TextStyle(color: dark),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: primary),
           ),
@@ -133,7 +134,7 @@ class _tugas7State extends State<tugas7> {
       );
     }
 
-    if (menu == "Tanggal") {
+    if (menu == "Pilih Tanggal Lahir") {
       return OutlinedButton.icon(
         style: OutlinedButton.styleFrom(
           side: BorderSide(color: primary),
@@ -153,11 +154,11 @@ class _tugas7State extends State<tugas7> {
       );
     }
 
-    if (menu == "Jam") {
+    if (menu == "Atur Pengingat") {
       return OutlinedButton.icon(
         style: OutlinedButton.styleFrom(
           side: BorderSide(color: primary),
-          foregroundColor: primary,
+          foregroundColor: dark,
         ),
         icon: Icon(Icons.access_time),
         label: Text("Pilih Waktu"),
@@ -175,29 +176,29 @@ class _tugas7State extends State<tugas7> {
   }
 
   String hasil() {
-    if (menu == "Checkbox") {
+    if (menu == "Syarat & Ketentuan") {
       return isChecked
-          ? "Lanjutkan pendaftaran diperbolehkan hehe"
-          : "Woi belum bisa lanjut!";
+          ? "Lanjutkan pendaftaran diperbolehkan"
+          : "Anda belum bisa melanjutkan";
     }
 
-    if (menu == "Switch") {
+    if (menu == "Mode Gelap") {
       return isDark ? "Mode Gelap Aktif" : "Mode Terang Mati";
     }
 
-    if (menu == "Dropdown") {
+    if (menu == "Pilih Kategori Produk") {
       return "Anda memilih kategori: $kategori";
     }
 
-    if (menu == "Tanggal" && tanggal != null) {
+    if (menu == "Pilih Tanggal Lahir" && tanggal != null) {
       return "Tanggal Lahir: ${tanggal!.day}-${tanggal!.month}-${tanggal!.year}";
     }
 
-    if (menu == "Jam" && jam != null) {
+    if (menu == "Atur Pengingat" && jam != null) {
       final h = jam!.hourOfPeriod == 0 ? 12 : jam!.hourOfPeriod;
       final m = jam!.minute.toString().padLeft(2, '0');
       final p = jam!.period == DayPeriod.am ? "AM" : "PM";
-      return "Jam: $h:$m $p";
+      return "Pengingat diatur pukul: $h:$m $p";
     }
 
     return "";

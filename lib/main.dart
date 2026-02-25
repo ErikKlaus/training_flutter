@@ -9,6 +9,9 @@ import 'package:training_flutter/tugas_5/tugas5.dart';
 import 'package:training_flutter/tugas_6/tugas6hal1.dart';
 import 'package:training_flutter/tugas_7/tugas7.dart';
 import 'package:training_flutter/tugas_8/tugas8.dart';
+import 'package:nik_parser_flutter/nik_parser_flutter.dart';
+import 'package:training_flutter/tugas_9/models/models.dart';
+import 'package:training_flutter/tugas_9/tugas9.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,11 +41,11 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: .fromSeed(
+        colorScheme: ColorScheme.fromSeed(
           seedColor: const Color.fromARGB(255, 179, 16, 16),
         ),
       ),
-      home: tugas8(),
+      home: Tugas9(),
     );
   }
 }

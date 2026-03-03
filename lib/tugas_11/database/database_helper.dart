@@ -10,13 +10,31 @@ class DatabaseHelper {
           CREATE TABLE pendaftar(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nama TEXT NOT NULL,
+            email TEXT NOT NULL,
             nomor_hp TEXT NOT NULL,
+            asal_kota TEXT NOT NULL,
             golongan_darah TEXT NOT NULL,
             rhesus TEXT NOT NULL
           )
         ''');
       },
-      version: 1,
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute('DROP TABLE IF EXISTS pendaftar');
+          await db.execute('''
+            CREATE TABLE pendaftar(
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              nama TEXT NOT NULL,
+              email TEXT NOT NULL,
+              nomor_hp TEXT NOT NULL,
+              asal_kota TEXT NOT NULL,
+              golongan_darah TEXT NOT NULL,
+              rhesus TEXT NOT NULL
+            )
+          ''');
+        }
+      },
+      version: 2,
     );
   }
 }

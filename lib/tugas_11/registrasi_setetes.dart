@@ -12,13 +12,16 @@ class RegistrasiSetetes extends StatefulWidget {
 class _RegistrasiSetetesState extends State<RegistrasiSetetes> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _nomorHpController = TextEditingController();
+  final TextEditingController _asalKotaController = TextEditingController();
 
   String? _golonganDarahTerpilih;
   String? _rhesusTerpilih;
 
   List<PendaftarModel> _daftarPendaftar = [];
   bool _sedangLoading = false;
+  int? _editId;
 
   final List<String> _daftarGolonganDarah = ['A', 'B', 'AB', 'O'];
   final List<String> _daftarRhesus = ['Positif (+)', 'Negatif (-)'];
@@ -32,7 +35,9 @@ class _RegistrasiSetetesState extends State<RegistrasiSetetes> {
   @override
   void dispose() {
     _namaController.dispose();
+    _emailController.dispose();
     _nomorHpController.dispose();
+    _asalKotaController.dispose();
     super.dispose();
   }
 
@@ -48,28 +53,70 @@ class _RegistrasiSetetesState extends State<RegistrasiSetetes> {
   Future<void> _simpanData() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final pendaftarBaru = PendaftarModel(
+    final pendaftar = PendaftarModel(
+      id: _editId,
       nama: _namaController.text.trim(),
+      email: _emailController.text.trim(),
       nomorHp: _nomorHpController.text.trim(),
+      asalKota: _asalKotaController.text.trim(),
       golonganDarah: _golonganDarahTerpilih!,
       rhesus: _rhesusTerpilih!,
     );
 
-    await PendaftarController.simpanPendaftar(pendaftarBaru);
+    if (_editId != null) {
+      await PendaftarController.updatePendaftar(pendaftar);
+    } else {
+      await PendaftarController.simpanPendaftar(pendaftar);
+    }
 
+    _resetForm();
+    await _loadDataPendaftar();
+
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          _editId != null
+              ? 'Data berhasil diperbarui!'
+              : 'Data berhasil disimpan!',
+        ),
+        backgroundColor: const Color(0xffD61000),
+      ),
+    );
+  }
+
+  void _resetForm() {
     _namaController.clear();
+    _emailController.clear();
     _nomorHpController.clear();
+    _asalKotaController.clear();
     setState(() {
       _golonganDarahTerpilih = null;
       _rhesusTerpilih = null;
+      _editId = null;
     });
+  }
 
+  void _isiFormUntukEdit(PendaftarModel pendaftar) {
+    _namaController.text = pendaftar.nama;
+    _emailController.text = pendaftar.email;
+    _nomorHpController.text = pendaftar.nomorHp;
+    _asalKotaController.text = pendaftar.asalKota;
+    setState(() {
+      _golonganDarahTerpilih = pendaftar.golonganDarah;
+      _rhesusTerpilih = pendaftar.rhesus;
+      _editId = pendaftar.id;
+    });
+  }
+
+  Future<void> _hapusData(int id) async {
+    await PendaftarController.hapusPendaftar(id);
     await _loadDataPendaftar();
 
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Data berhasil disimpan!'),
+        content: Text('Data berhasil dihapus!'),
         backgroundColor: Color(0xffD61000),
       ),
     );
@@ -120,12 +167,35 @@ class _RegistrasiSetetesState extends State<RegistrasiSetetes> {
                   const SizedBox(height: 6),
                   TextFormField(
                     controller: _namaController,
+
                     validator: (nilai) {
                       if (nilai == null || nilai.trim().isEmpty) {
                         return 'Nama tidak boleh kosong';
                       }
                       if (nilai.trim().length < 3) {
                         return 'Nama minimal 3 karakter';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  const Text(
+                    'Email',
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(height: 6),
+                  TextFormField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (nilai) {
+                      if (nilai == null || nilai.trim().isEmpty) {
+                        return 'Email tidak boleh kosong';
+                      }
+                      if (!RegExp(
+                        r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                      ).hasMatch(nilai.trim())) {
+                        return 'Format email tidak valid';
                       }
                       return null;
                     },
@@ -149,6 +219,22 @@ class _RegistrasiSetetesState extends State<RegistrasiSetetes> {
                       }
                       if (!RegExp(r'^[0-9]+$').hasMatch(nilai.trim())) {
                         return 'Nomor HP hanya boleh berisi angka';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  const Text(
+                    'Asal Kota',
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(height: 6),
+                  TextFormField(
+                    controller: _asalKotaController,
+                    validator: (nilai) {
+                      if (nilai == null || nilai.trim().isEmpty) {
+                        return 'Asal kota tidak boleh kosong';
                       }
                       return null;
                     },
@@ -210,15 +296,15 @@ class _RegistrasiSetetesState extends State<RegistrasiSetetes> {
                   ),
                   const SizedBox(height: 24),
 
-                  // Tombol Simpan
+                  // Tombol Simpan / Update
                   SizedBox(
                     width: double.infinity,
                     height: 48,
-                    child: ElevatedButton.icon(
+                    child: ElevatedButton(
                       onPressed: _simpanData,
-                      label: const Text(
-                        'Daftar',
-                        style: TextStyle(
+                      child: Text(
+                        _editId != null ? 'Update' : 'Daftar',
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -232,6 +318,30 @@ class _RegistrasiSetetesState extends State<RegistrasiSetetes> {
                       ),
                     ),
                   ),
+                  if (_editId != null) ...[
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 48,
+                      child: OutlinedButton(
+                        onPressed: _resetForm,
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: Color(0xffD61000)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                        ),
+                        child: const Text(
+                          'Batal Edit',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffD61000),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
@@ -345,8 +455,37 @@ class _RegistrasiSetetesState extends State<RegistrasiSetetes> {
                   Row(
                     children: [
                       const SizedBox(width: 4),
+                      Expanded(
+                        child: Text(
+                          pendaftar.email,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Color(0xff6B7280),
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 2),
+                  Row(
+                    children: [
+                      const SizedBox(width: 4),
                       Text(
                         pendaftar.nomorHp,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Color(0xff6B7280),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 2),
+                  Row(
+                    children: [
+                      const SizedBox(width: 4),
+                      Text(
+                        pendaftar.asalKota,
                         style: const TextStyle(
                           fontSize: 13,
                           color: Color(0xff6B7280),
@@ -358,17 +497,69 @@ class _RegistrasiSetetesState extends State<RegistrasiSetetes> {
               ),
             ),
 
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-              child: Text(
-                '${pendaftar.golonganDarah} Rh ${pendaftar.rhesus}',
-                style: const TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xffD61000),
+            Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(
+                    '${pendaftar.golonganDarah} Rh ${pendaftar.rhesus}',
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xffD61000),
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextButton(
+                      onPressed: () => _isiFormUntukEdit(pendaftar),
+                      style: TextButton.styleFrom(
+                        foregroundColor: const Color(0xff3B82F6),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: const Text(
+                        'Edit',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    TextButton(
+                      onPressed: () {
+                        if (pendaftar.id != null) {
+                          _hapusData(pendaftar.id!);
+                        }
+                      },
+                      style: TextButton.styleFrom(
+                        foregroundColor: const Color(0xffEF4444),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      child: const Text(
+                        'Hapus',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
@@ -376,14 +567,10 @@ class _RegistrasiSetetesState extends State<RegistrasiSetetes> {
     );
   }
 
-  InputDecoration _dekorasiInput({
-    required String petunjuk,
-    required IconData ikon,
-  }) {
+  InputDecoration _dekorasiInput({required String petunjuk}) {
     return InputDecoration(
       hintText: petunjuk,
       hintStyle: const TextStyle(color: Color(0xff6B7280), fontSize: 14),
-      prefixIcon: Icon(ikon, color: const Color(0xffD61000), size: 20),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
